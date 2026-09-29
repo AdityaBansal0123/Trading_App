@@ -1,100 +1,171 @@
-<h1 align="center"> Crypto Investment App </h1>
+# Crypto Wave — Live Crypto Market Dashboard
 
-<p align="center">This project was created as a demonstration of my skills</p><br/>
+Crypto Wave is a React Native market dashboard that combines historical Binance candlestick data with real-time WebSocket updates. The project includes an Expo mobile frontend and a lightweight Express API proxy.
 
-<p align="center">
-  <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-execution">Execution</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-demo">Demo</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-</p>
-
-<br>
+> This project is a market-data interface and UI prototype. It does not connect to a real wallet or execute cryptocurrency trades.
 
 <p align="center">
-  <img alt="Registration Form" src=".github/cover.png" width="100%">
+  <img src=".github/cover.png" alt="Crypto Wave application preview" width="100%" />
 </p>
 
-## 🚀 Technologies
+## Features
 
-This project was developed using the following technologies and standards:
+- Live BTC and ETH price charts powered by Binance WebSocket streams
+- Selectable `1m`, `15m`, `1h`, and `1d` chart intervals
+- Candlestick charts with open, high, low, and close values
+- Eight configured USDT markets with searchable selection
+- Interactive chart cursors with haptic feedback
+- Animated splash screen and promotional cards
+- Responsive five-tab Expo Router navigation
+- Dark reusable design system
 
-- [Expo](https://expo.dev/)
-- [React Native](https://reactnative.dev/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Zustand](https://github.com/pmndrs/zustand)
-- [React Reanimated 2x](https://github.com/software-mansion/react-native-reanimated)
-- [React Native Animatable](https://github.com/oblador/react-native-animatable)
-- [Websockets](https://github.com/robtaussig/react-use-websocket)
-- [React Native Wagmi Charts](https://github.com/coinjar/react-native-wagmi-charts)
+## Current scope
 
-## 💻 Project
+The Home tab contains the working market dashboard. Wallet, Swap, Earn, and Settings currently demonstrate the navigation and animation patterns but remain placeholder screens. The displayed wallet address and balance are sample data, and the Send and Receive buttons are not connected to wallet operations.
 
-this project was inspired by the layout of the Nomad Global app [Nomad](https://www.nomadglobal.com/en) and by Binance Exchange [Binance](https://www.binance.com/en)
+## Architecture
 
-## 💬 Explanation
-
-This application has been divided into 2 folders `backend` and `frontend`
-
-  - Backend
-    - It is a simple `Node.js` server that calls the `Binance public API` and serves on a local address on port 3001.
-
-  - Frontend
-    - It is a `React Native` application built using the `Expo SDK 50`, consumes the backend API and has connections to `Binance Websockets` to update the charts in `real time`
-
-## 🏆 Challenges
-
-Perhaps the hardest part was making the Binance API available online so that the Android installation file could be made available.
-
-- Binance API cannot run on US clients, servers generally default to North American servers
-
-- I needed to change the server region to Asia so that there would be no problem with the API
-
-## ⚙️ Execution
-
-
-1 - Install dependencies and run the backend.
-```sh
-cd backend && yarn && node src/server.js
+```text
+Expo application ──HTTP──> Express API ──HTTP──> Binance REST API
+       │
+       └──────────── WebSocket ──────────> Binance market streams
 ```
 
-you will see something similar to this:
-<img alt="Registration Form" src=".github/server-running.png" width="100%">
+- The backend proxies public Binance REST endpoints on port `3001`.
+- The frontend loads initial chart data through the backend.
+- Binance WebSocket streams update the active charts in real time.
 
-2 - Now you need to run the frontend
-```sh
-cd frontend && yarn && yarn start
+## Tech stack
+
+### Frontend
+
+- Expo SDK 51
+- React Native 0.74
+- TypeScript
+- Expo Router
+- Tamagui
+- Zustand
+- React Native Reanimated
+- React Native Wagmi Charts
+- React Use WebSocket
+- Lottie animations
+
+### Backend
+
+- Node.js
+- Express
+- Axios
+- CORS
+- dotenv
+
+## Project structure
+
+```text
+.
+├── .github/                    # Repository preview images
+├── backend/
+│   ├── src/api/binance.js      # Binance REST requests
+│   ├── src/server.js           # Express routes and server startup
+│   └── package.json
+├── frontend/
+│   ├── @types/                 # Shared TypeScript declarations
+│   ├── api/                    # Backend API client
+│   ├── app/                    # Expo Router routes
+│   ├── assets/                 # Icons, images, and Lottie animations
+│   ├── components/             # Charts and reusable UI components
+│   ├── mock/                   # Supported market options
+│   ├── services/               # Data-fetching and parsing layer
+│   ├── stores/                 # Zustand exchange state
+│   ├── styles/                 # Colors, spacing, and typography
+│   └── utils/                  # Parsers and enums
+└── README.md
 ```
 
-you will see something similar to this:
+## Getting started
 
-<img alt="Registration Form" src=".github/expo.png" width="100%">
+### Prerequisites
 
-3 - You can simulate on your own iOS or Android device by installing Expo Go on your device
+- A current Node.js LTS release
+- Yarn
+- Expo Go, Android Studio, or Xcode
 
-[Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&pli=1)
-or
-[Play Store](https://apps.apple.com/br/app/expo-go/id982107779) 
+### 1. Clone the repository
 
-**[Optional]** 
+```bash
+git clone https://github.com/AdityaBansal0123/Trading_App.git
+cd Trading_App
+```
 
-If you have a simulator on your macbook or notebook you can simply `press "a"` to simulate Android or `press "i"` to simulate iOS
+### 2. Configure and run the backend
 
-## 🖥 Demo
+The backend expects this environment variable in `backend/.env`:
 
-You  can see a previews here
+```env
+BINANCE_BASE_URL=https://api.binance.com/api/v3
+```
 
-https://github.com/AdityaBansal0123/Trading_App/assets/8043534/9ddabb24-6e83-47b2-af98-8b3e33ce96cf
-  
-https://github.com/AdityaBansal0123/Trading_App/assets/8043534/dab2d2f2-9c89-4eaa-9795-d8b688894ab0
+Install dependencies and start the server:
 
-https://github.com/AdityaBansal0123/Trading_App/assets/8043534/152ed701-030b-48ee-b792-49a79a2c11ee
+```bash
+cd backend
+yarn install
+node src/server.js
+```
 
-https://github.com/AdityaBansal0123/Trading_App/assets/8043534/8d860e79-e79b-43ed-a557-3e7d587895b4
+The API will listen on `http://localhost:3001`.
 
-https://github.com/AdityaBansal0123/Trading_App/assets/8043534/32e3b7ca-819b-43bb-845a-c82b908a649c
+### 3. Run the frontend
 
----
+Open a second terminal:
 
+```bash
+cd frontend
+yarn install
+yarn start
+```
 
+Use the Expo terminal to open Android, iOS, or the web version.
+
+### Running on a physical device
+
+The frontend currently uses `http://localhost:3001` in `frontend/api/binance.tsx`. On a physical phone, `localhost` refers to the phone itself. Replace it with the development computer's LAN address, such as `http://192.168.1.10:3001`, and ensure both devices are on the same network.
+
+For an Android emulator, use `http://10.0.2.2:3001`. The iOS simulator can normally access the computer through `http://localhost:3001`.
+
+## API endpoints
+
+| Endpoint | Purpose |
+| --- | --- |
+| `GET /tickers` | Fetch Binance exchange information |
+| `GET /klines?symbol=BTCUSDT&interval=1m` | Fetch 60 closing-price points |
+| `GET /uiKlines?symbol=BTCUSDT&interval=1m` | Fetch 30 candlestick entries |
+
+## Supported markets
+
+- BNB/USDT
+- BTC/USDT
+- ETH/USDT
+- MATIC/USDT
+- NEAR/USDT
+- PENDLE/USDT
+- RNDR/USDT
+- SOL/USDT
+
+## Available frontend scripts
+
+| Command | Description |
+| --- | --- |
+| `yarn start` | Start the Expo development server |
+| `yarn android` | Open the Android target |
+| `yarn ios` | Open the iOS target |
+| `yarn web` | Open the web target |
+| `yarn lint` | Run Expo linting |
+| `yarn test` | Run Jest in watch mode |
+
+## Data and risk notice
+
+Market information is provided by Binance and may be delayed, interrupted, or unavailable in some regions. This application is a demonstration project and does not provide financial advice.
+
+## Repository
+
+https://github.com/AdityaBansal0123/Trading_App
