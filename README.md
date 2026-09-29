@@ -3,11 +3,6 @@
 Crypto Wave is a React Native market dashboard that combines historical Binance candlestick data with real-time WebSocket updates. The project includes an Expo mobile frontend and a lightweight Express API proxy.
 
 > This project is a market-data interface and UI prototype. It does not connect to a real wallet or execute cryptocurrency trades.
-
-<p align="center">
-  <img src=".github/cover.png" alt="Crypto Wave application preview" width="100%" />
-</p>
-
 ## Features
 
 - Live BTC and ETH price charts powered by Binance WebSocket streams
